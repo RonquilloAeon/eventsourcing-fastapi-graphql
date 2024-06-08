@@ -2,7 +2,7 @@ from uuid import UUID
 from decimal import Decimal
 from fastapi import FastAPI
 
-from bankaccounts.application import BankAccounts
+from src.application import BankAccounts
 
 app = FastAPI()
 accounts = BankAccounts()

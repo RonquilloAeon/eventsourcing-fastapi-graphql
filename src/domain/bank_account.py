@@ -3,7 +3,7 @@ from typing import Optional
 from decimal import Decimal
 from eventsourcing.domain import Aggregate, AggregateCreated, AggregateEvent
 
-from bankaccounts.exceptions import *
+from .exceptions import *
 
 
 class Opened(AggregateCreated):

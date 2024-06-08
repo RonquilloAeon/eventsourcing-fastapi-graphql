@@ -2,8 +2,8 @@ import unittest
 from uuid import uuid4
 from decimal import Decimal
 
-from bankaccounts.application import BankAccounts
-from bankaccounts.exceptions import *
+from src.application import BankAccounts
+from src.exceptions import *
 
 
 class TestBankAccounts(unittest.TestCase):
