@@ -1,0 +1,44 @@
+version: "3.8"
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: development
+    container_name: eventsourcing_demo_api
+    environment:
+      - DM_LOG_LEVEL=info
+      - PERSISTENCE_MODULE=eventsourcing.postgres
+      - POSTGRES_DBNAME=bank
+      - POSTGRES_HOST=pool
+      - POSTGRES_PASSWORD=pgpass
+      - POSTGRES_PORT=6432
+      - POSTGRES_USER=esdemo
+    ports:
+      - "8082:8000"
+    restart: on-failure
+    volumes:
+      - ./src:/app/src
+
+  db:
+    container_name: eventsourcing_demo_db
+    environment:
+      - POSTGRES_USER=esdemo
+      - POSTGRES_PASSWORD=pgpass
+      - POSTGRES_DB=bank
+    image: postgres:15.4-alpine3.17
+    ports:
+      - "4432:5432"
+    restart: on-failure
+    volumes:
+      - ./.db:/var/lib/postgresql/data
+
+  pool:
+    build:
+      context: pool
+      dockerfile: Dockerfile
+    container_name: eventsourcing_demo_db_pool
+    depends_on:
+      - db
+    platform: linux/amd64
+    restart: on-failure

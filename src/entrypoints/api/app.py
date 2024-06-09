@@ -2,7 +2,7 @@ from uuid import UUID
 from decimal import Decimal
 from fastapi import FastAPI
 
-from src.application import BankAccounts
+from src.app.bank_accounts import BankAccounts
 
 app = FastAPI()
 accounts = BankAccounts()
@@ -87,9 +87,3 @@ def close_account(account_id: UUID):
     except Exception as e:
         return {"error": e.__class__.__name__}
     return account
-
-
-if __name__ == "__main__":
-    import uvicorn
-
-    uvicorn.run("main:app", host="127.0.0.1", port=5000, log_level="info", reload=True)
