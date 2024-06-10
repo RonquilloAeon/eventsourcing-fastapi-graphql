@@ -2,8 +2,12 @@ import unittest
 from uuid import uuid4
 from decimal import Decimal
 
-from src.application import BankAccounts
-from src.exceptions import *
+from src.app.bank_accounts import BankAccounts
+from src.domain.exceptions import (
+    AccountClosedError,
+    AccountNotFoundError,
+    InsufficientFundsError,
+)
 
 
 class TestBankAccounts(unittest.TestCase):
@@ -168,5 +172,5 @@ class TestBankAccounts(unittest.TestCase):
             )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

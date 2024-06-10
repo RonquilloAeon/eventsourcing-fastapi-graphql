@@ -2,8 +2,8 @@ from uuid import UUID
 from decimal import Decimal
 from eventsourcing.application import Application, AggregateNotFound
 
-from src.aggregate import BankAccount
-from src.exceptions import *
+from src.domain.bank_account import BankAccount
+from src.domain.exceptions import AccountNotFoundError
 
 
 class BankAccounts(Application):
