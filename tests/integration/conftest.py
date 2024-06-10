@@ -1,8 +1,14 @@
 import os
+import typing
 
 import psycopg2
+import pytest
 from contextlib import contextmanager
+from httpx import AsyncClient
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
+
+from .utils import get_test_client
+from src.entrypoints.api.app import create_app as create_api_app
 
 DB_NAME = os.getenv("POSTGRES_DBNAME")
 DB_CONFIG = {
@@ -36,3 +42,27 @@ def pytest_configure(config) -> None:
 
 def pytest_unconfigure(config) -> None:
     run_db_statement(f"DROP DATABASE {DB_NAME}")
+
+
+@pytest.fixture
+async def api_client() -> AsyncClient:
+    api_app = create_api_app()
+
+    async for client in get_test_client(api_app):
+        yield client
+
+
+@pytest.fixture
+def graphql_test_client(api_client):
+    async def _wrapped_test_client(
+        query: str,
+        headers: dict[str, str] | None = None,
+        variables: dict[str, typing.Any] | None = None,
+    ):
+        return await api_client.post(
+            "/graphql",
+            headers=headers,
+            json={"query": query, "variables": variables or {}},
+        )
+
+    return _wrapped_test_client
