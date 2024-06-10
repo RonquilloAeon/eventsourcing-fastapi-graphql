@@ -22,6 +22,17 @@ production = ["uvicorn"]
 [tool.poetry.group.dev.dependencies]
 pre-commit = "^3.7.1"
 ruff = "^0.4.8"
+pytest = "^8.2.2"
+
+[tool.pytest.ini_options]
+addopts = "-svv"
+asyncio_mode = "auto"
+
+[tool.ruff]
+include = ["src/**/*.py", "tests/**/*.py", "noxfile.py"]
+
+[tool.ruff.format]
+exclude = ["*.pyi"]
 
 [build-system]
 requires = ["poetry-core"]
