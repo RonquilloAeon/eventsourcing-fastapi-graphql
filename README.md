@@ -10,9 +10,5 @@ pip install nox-poetry
 pyenv local 3.12
 poetry install
 pre-commit install
-```
-2. Start FastAPI process
-```zsh
 docker compose up
 ```
-3. Open local API docs [http://localhost:5000/docs](http://localhost:5000/docs)
