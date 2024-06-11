@@ -54,7 +54,7 @@ class BankAccountMutations:
         accounts = BankAccounts()
 
         try:
-            accounts.deposit_funds(str(account_id), input.amount)
+            accounts.deposit_funds(UUID(account_id), input.amount)
 
             return graphql.Success(
                 entities=[],
