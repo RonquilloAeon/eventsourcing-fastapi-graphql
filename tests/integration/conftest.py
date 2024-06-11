@@ -37,7 +37,11 @@ def run_db_statement(statement: str) -> None:
 
 
 def pytest_configure(config) -> None:
-    run_db_statement(f"CREATE DATABASE {DB_NAME}")
+    try:
+        run_db_statement(f"CREATE DATABASE {DB_NAME}")
+    except psycopg2.errors.lookup("42P04"):
+        run_db_statement(f"DROP DATABASE {DB_NAME}")
+        run_db_statement(f"CREATE DATABASE {DB_NAME}")
 
 
 def pytest_unconfigure(config) -> None:
