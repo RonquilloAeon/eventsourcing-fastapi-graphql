@@ -276,8 +276,8 @@ async def test_bank_account_funds_transfer(fake, graphql_test_client):
 
     # Transfer from account A to account B
     input_data = {
-        "debitBankAccount": bank_account_a_global_id,
         "creditBankAccount": bank_account_b_global_id,
+        "debitBankAccount": bank_account_a_global_id,
         "amount": "240.00",
     }
 
